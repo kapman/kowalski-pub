@@ -4,7 +4,7 @@ Generative art for a Pimoroni Inky Impression 7.3-inch e-ink display, driven by 
 
 ![Generated formula-grid demo](assets/demo/formula-grid.png)
 
-![Alternate noise-lines demo](assets/demo/noise-lines.png)
+![Alternate noise-lines demo](assets/demo/noise-lines-dark.png)
 
 The project renders an 800×480 Three.js scene, captures it as a PNG with headless Chromium, and sends it to the Inky display. A systemd timer refreshes the display every 10 minutes.
 
