@@ -1,0 +1,11 @@
+[Unit]
+Description=Kowalski - render generative art every 10 minutes
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=10min
+AccuracySec=1min
+Unit=kowalski.service
+
+[Install]
+WantedBy=timers.target

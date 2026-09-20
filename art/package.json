@@ -1,0 +1,23 @@
+{
+  "name": "art",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/d3-array": "^3.2.2",
+    "@types/three": "^0.185.1",
+    "lil-gui": "^0.21.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.1"
+  },
+  "dependencies": {
+    "d3-array": "^3.2.4",
+    "puppeteer": "^24.0.0",
+    "three": "^0.185.1"
+  }
+}
