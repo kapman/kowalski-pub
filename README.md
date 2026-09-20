@@ -35,7 +35,7 @@ The display entrypoint also supports `display/show_image.py` for testing with a 
 Prerequisites: Raspberry Pi OS, a connected Inky Impression, network access, and a cloned copy of this repository.
 
 ```sh
-git clone <repository-url> ~/kowalski
+git clone https://github.com/kapman/kowalski-pub.git ~/kowalski
 cd ~/kowalski
 ./scripts/pi/bootstrap.sh
 ```
