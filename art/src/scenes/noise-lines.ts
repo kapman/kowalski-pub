@@ -18,8 +18,12 @@ const MAX_POINTS = 75;
 const DISTORTION_START = 0.2;
 const DISTORTION_END = 0.9;
 const FREQUENCY = 0.1;
+const BACKGROUND_COLOR = "rgb(20, 20, 25)";
 
-const { scene, camera, renderer, bounds } = createScene({ margin: 75 });
+const { scene, camera, renderer, bounds } = createScene({
+  background: BACKGROUND_COLOR,
+  margin: 75,
+});
 
 const lineYs = ticks(bounds.bottom, bounds.top, 15);
 lineYs.forEach(createLine);
