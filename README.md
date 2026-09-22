@@ -23,8 +23,8 @@ See the [Inky Impression guide](https://learn.pimoroni.com/article/getting-start
 
 ## Architecture
 
-- **Artwork** (`art/src/scenes/`) — each module is one artwork: a self-contained Three.js program that draws one randomized 800×480 frame. The seed changes per run, so no two refreshes match.
-- **Capture** (`art/src/capture.mjs`) — takes a scene name and captures it in headless Chromium, saving the canvas as a PNG. Every scene ships in the bundle, so selection is a runtime choice with no rebuild.
+- **Artwork** (`art/scenes/`) — each module is one artwork: a self-contained Three.js program that draws one randomized 800×480 frame. The seed changes per run, so no two refreshes match.
+- **Capture** (`art/capture.mjs`) — takes a scene name and captures it in headless Chromium, saving the canvas as a PNG. Every scene ships in the bundle, so selection is a runtime choice with no rebuild.
 - **Display** (`display/`) — `show_generative.py` picks a random scene and runs the capture, then `show.py` sends the PNG to the Inky display, which handles the seven-color conversion and panel refresh. `show_image.py` does the same for a local image.
 - **Scheduling** (`systemd/`) — a systemd service performs one refresh; a timer fires it at boot and every 10 minutes.
 
@@ -63,7 +63,7 @@ Open the Vite URL printed by the command — it loads a random scene; append `?s
 
 ```sh
 npm run build
-node src/capture.mjs --scene formula-grid --out images
+node capture.mjs --scene formula-grid --out images
 ```
 
 Generated captures in `art/images/` are ignored by Git.

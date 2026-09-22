@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import { existsSync, mkdirSync } from "fs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DIST = resolve(__dirname, "..", "dist", "index.html");
+const DIST = resolve(__dirname, "dist", "index.html");
 const WIDTH = 800;
 const HEIGHT = 480;
 
@@ -14,13 +14,13 @@ if (!existsSync(DIST)) {
 }
 
 const outArg = process.argv.indexOf("--out");
-const outDir = outArg !== -1 ? resolve(process.argv[outArg + 1]) : resolve(__dirname, "..", "images");
+const outDir = outArg !== -1 ? resolve(process.argv[outArg + 1]) : resolve(__dirname, "images");
 mkdirSync(outDir, { recursive: true });
 
 const sceneArg = process.argv.indexOf("--scene");
 const scene = sceneArg !== -1 ? process.argv[sceneArg + 1] : undefined;
 if (!scene) {
-  console.error("Usage: node src/capture.mjs --scene <name> [--out dir]");
+  console.error("Usage: node capture.mjs --scene <name> [--out dir]");
   process.exit(1);
 }
 
