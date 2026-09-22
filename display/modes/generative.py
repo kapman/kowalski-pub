@@ -7,7 +7,7 @@ from pathlib import Path
 
 from PIL import Image
 
-REPO_DIR = Path(__file__).resolve().parent.parent
+REPO_DIR = Path(__file__).resolve().parent.parent.parent
 ART_DIR = REPO_DIR / "art"
 IMAGES_DIR = ART_DIR / "images"
 SCENES_DIR = ART_DIR / "scenes"
@@ -27,7 +27,7 @@ def _find_node():
 def render(inky, arg=None):
     node = _find_node()
     scene = random.choice(sorted(p.stem for p in SCENES_DIR.glob("*.ts")))
-    print(f"[show_generative] scene: {scene}", flush=True)
+    print(f"[generative] scene: {scene}", flush=True)
     result = subprocess.run(
         [node, str(ART_DIR / "capture.mjs"), "--scene", scene, "--out", str(IMAGES_DIR)],
         cwd=ART_DIR,

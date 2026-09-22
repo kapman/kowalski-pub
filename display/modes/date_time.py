@@ -20,8 +20,8 @@ def format_now():
 
 
 def render(inky, arg=None):
-    # arg unused: this renderer takes no extra config, kept for a consistent
-    # interface with other renderers.
+    # arg unused: this mode takes no extra config, kept for a consistent
+    # interface with other modes.
     text = format_now()
 
     image = Image.new("P", inky.resolution, inky.WHITE)

@@ -10,7 +10,7 @@ from pathlib import Path
 
 from PIL import Image
 
-IMAGES_DIR = Path(__file__).resolve().parent.parent / "assets" / "images"
+IMAGES_DIR = Path(__file__).resolve().parent.parent.parent / "assets" / "images"
 
 
 def pick_random_image():

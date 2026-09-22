@@ -25,7 +25,7 @@ See the [Inky Impression guide](https://learn.pimoroni.com/article/getting-start
 
 - **Artwork** (`art/scenes/`) — each module is one artwork: a self-contained Three.js program that draws one randomized 800×480 frame. The seed changes per run, so no two refreshes match.
 - **Capture** (`art/capture.mjs`) — takes a scene name and captures it in headless Chromium, saving the canvas as a PNG. Every scene ships in the bundle, so selection is a runtime choice with no rebuild.
-- **Display** (`display/`) — `show_generative.py` picks a random scene and runs the capture, then `show.py` sends the PNG to the Inky display, which handles the seven-color conversion and panel refresh. `show_image.py` does the same for a local image.
+- **Display** (`display/`) — `show.py` picks a display mode and puts its image on the panel, letting the Inky library handle the seven-color conversion and refresh. The generative mode (default) picks a random scene and runs the capture; the image mode shows a local file.
 - **Scheduling** (`systemd/`) — a systemd service performs one refresh; a timer fires it at boot and every 10 minutes.
 
 ## Raspberry Pi setup
@@ -94,7 +94,7 @@ export PI_HOST=pi@raspberrypi.local
 ./scripts/dev/push.sh
 ```
 
-This syncs the checkout to `~/kowalski-dev` and runs the generative renderer using the Python environment from `~/kowalski`. Use `./scripts/dev/push.sh --main` when deploying changes that affect the bootstrap script or systemd units.
+This syncs the checkout to `~/kowalski-dev` and refreshes the display (generative mode by default) using the Python environment from `~/kowalski`. Use `./scripts/dev/push.sh --main` when deploying changes that affect the bootstrap script or systemd units.
 
 To shut down the Pi remotely:
 
@@ -108,8 +108,8 @@ This runs `sudo shutdown` over SSH, which requires passwordless sudo for the Pi 
 
 ```text
 art/                  Three.js scenes, headless frame capture, and build config
-display/              Python display entrypoints and renderers
-assets/images/        Sample images for the image renderer
+display/              Display entrypoint and modes
+assets/images/        Sample images for the image mode
 scripts/dev/          Local-to-Pi sync and shutdown helpers
 scripts/pi/           One-time Pi bootstrap script
 systemd/              Service and timer templates

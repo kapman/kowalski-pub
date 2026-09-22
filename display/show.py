@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
-"""Entrypoint for what gets shown on the Inky display. Defaults to the
-show_generative renderer unless one is given.
-
-Every other .py file in this directory is treated as a renderer and must
-define a `render(inky, arg=None) -> PIL.Image` function.
+"""Entrypoint for what gets shown on the Inky display. Runs one display
+mode (default: generative). Every module in modes/ defines a
+`render(inky, arg=None) -> PIL.Image` function.
 
 Usage:
-    show.py [renderer] [arg]   # e.g. show.py show_image assets/images/forest.jpg
+    show.py [mode] [arg]   # e.g. show.py image assets/images/forest.jpg
 """
 
 import importlib
@@ -18,28 +16,23 @@ from inky.auto import auto
 DISPLAY_DIR = Path(__file__).resolve().parent
 
 
-def available_renderers():
-    return sorted(
-        p.stem for p in DISPLAY_DIR.glob("*.py") if p.stem not in ("show", "__init__")
-    )
+def available_modes():
+    return sorted(p.stem for p in (DISPLAY_DIR / "modes").glob("*.py"))
 
 
-def main(renderer=None, arg=None):
+def main(mode=None, arg=None):
     inky = auto()
 
-    if renderer is None:
-        renderer = "show_generative"
-    try:
-        module = importlib.import_module(renderer)
-    except ModuleNotFoundError as e:
+    if mode is None:
+        mode = "generative"
+    if mode not in available_modes():
         raise RuntimeError(
-            f"Unknown renderer '{renderer}'. Available: {', '.join(available_renderers())}"
-        ) from e
-
+            f"Unknown mode '{mode}'. Available: {', '.join(available_modes())}"
+        )
     try:
-        image = module.render(inky, arg)
+        image = importlib.import_module(f"modes.{mode}").render(inky, arg)
     except Exception as e:
-        raise RuntimeError(f"Renderer '{renderer}' failed: {e}") from e
+        raise RuntimeError(f"Mode '{mode}' failed: {e}") from e
 
     try:
         inky.set_image(image)

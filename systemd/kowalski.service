@@ -7,7 +7,7 @@ User=@USER@
 Environment="PATH=@HOME@/.local/share/fnm/aliases/default/bin:/usr/local/bin:/usr/bin:/bin"
 Environment="PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium"
 WorkingDirectory=@REPO_DIR@
-ExecStart=@REPO_DIR@/.venv/bin/python @REPO_DIR@/display/show.py show_generative
+ExecStart=@REPO_DIR@/.venv/bin/python @REPO_DIR@/display/show.py generative
 StandardOutput=journal
 StandardError=journal
 
