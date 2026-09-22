@@ -20,7 +20,14 @@ mkdirSync(outDir, { recursive: true });
 const sceneArg = process.argv.indexOf("--scene");
 const scene = sceneArg !== -1 ? process.argv[sceneArg + 1] : undefined;
 if (!scene) {
-  console.error("Usage: node capture.mjs --scene <name> [--out dir]");
+  console.error("Usage: node capture.mjs --scene <name> [--seed <n>] [--out dir]");
+  process.exit(1);
+}
+
+const seedArg = process.argv.indexOf("--seed");
+const seed = seedArg !== -1 ? process.argv[seedArg + 1] : undefined;
+if (seed !== undefined && !/^\d+$/.test(seed)) {
+  console.error(`Invalid seed: ${seed}`);
   process.exit(1);
 }
 
@@ -46,7 +53,9 @@ await page.setViewport({ width: WIDTH, height: HEIGHT });
 page.on("console", (msg) => console.error("[PAGE]", msg.text()));
 page.on("pageerror", (err) => console.error("[PAGE_ERROR]", err.message));
 
-await page.goto(`file://${DIST}?scene=${encodeURIComponent(scene)}`, {
+const seedQuery = seed !== undefined ? `&seed=${encodeURIComponent(seed)}` : "";
+
+await page.goto(`file://${DIST}?scene=${encodeURIComponent(scene)}${seedQuery}`, {
   waitUntil: "domcontentloaded",
   timeout: 60_000,
 });

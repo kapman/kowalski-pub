@@ -10,6 +10,7 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
 } from "../lib/scene.js";
+import { mulberry32, getSeedFromUrl } from "../lib/utils.js";
 
 const MAX_NOISE_AMP = 40;
 // const MIN_LINE_WIDTH = 0.5;
@@ -47,7 +48,7 @@ function createLine(startY: number) {
 }
 
 function createVertices(startY: number, xCoordinates: number[]): number[] {
-  const simplex = new SimplexNoise();
+  const simplex = new SimplexNoise({ random: mulberry32(getSeedFromUrl() ?? Date.now()) });
   const vertices = [];
   const verticalNoiseFactor =
     (bounds.top - startY) / (bounds.top - bounds.bottom);

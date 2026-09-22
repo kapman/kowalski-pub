@@ -50,3 +50,11 @@ export function mulberry32(seed: number): () => number {
 export function createRandomRange(prng: () => number) {
   return (min: number, max: number) => min + prng() * (max - min);
 }
+
+/** Seed from the ?seed= query parameter, or undefined when absent. */
+export function getSeedFromUrl(): number | undefined {
+  const fromUrl = new URLSearchParams(window.location.search).get("seed");
+  if (fromUrl === null) return undefined;
+  const parsed = Number.parseInt(fromUrl, 10);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}

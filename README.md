@@ -24,7 +24,7 @@ See the [Inky Impression guide](https://learn.pimoroni.com/article/getting-start
 ## Architecture
 
 - **Artwork** (`art/scenes/`) — each module is one artwork: a self-contained Three.js program that draws one randomized 800×480 frame. The seed changes per run, so no two refreshes match.
-- **Capture** (`art/capture.mjs`) — takes a scene name and captures it in headless Chromium, saving the canvas as a PNG. Every scene ships in the bundle, so selection is a runtime choice with no rebuild.
+- **Capture** (`art/capture.mjs`) — takes a scene name and an optional seed, captures the scene in headless Chromium, and saves the canvas as a PNG. Every scene ships in the bundle, so selection is a runtime choice with no rebuild; a repeated scene/seed pair reproduces the exact frame.
 - **Display** (`display/`) — `show.py` picks a display mode and puts its image on the panel, letting the Inky library handle the seven-color conversion and refresh. The generative mode (default) picks a random scene and runs the capture; the image mode shows a local file.
 - **Scheduling** (`systemd/`) — a systemd service performs one refresh; a timer fires it at boot and every 10 minutes.
 

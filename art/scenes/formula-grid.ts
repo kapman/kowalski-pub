@@ -7,11 +7,11 @@ import {
   PointsMaterial,
 } from "three";
 import { parabolicWave } from "../lib/formulas.js";
-import { createRandomRange, fitToBounds, mulberry32 } from "../lib/utils.js";
+import { createRandomRange, fitToBounds, mulberry32, getSeedFromUrl } from "../lib/utils.js";
 import { createScene } from "../lib/scene.js";
 
 const CONFIG = {
-  seed: Date.now(),
+  seed: getSeedFromUrl() ?? Date.now(),
   step: 0.01,
   marginMultiplier: 0.9,
   pointColor: "rgb(220, 220, 220)",

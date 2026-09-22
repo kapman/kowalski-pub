@@ -27,9 +27,10 @@ def _find_node():
 def render(inky, arg=None):
     node = _find_node()
     scene = random.choice(sorted(p.stem for p in SCENES_DIR.glob("*.ts")))
-    print(f"[generative] scene: {scene}", flush=True)
+    seed = random.randint(0, 2**31 - 1)
+    print(f"[generative] scene: {scene}, seed: {seed}", flush=True)
     result = subprocess.run(
-        [node, str(ART_DIR / "capture.mjs"), "--scene", scene, "--out", str(IMAGES_DIR)],
+        [node, str(ART_DIR / "capture.mjs"), "--scene", scene, "--seed", str(seed), "--out", str(IMAGES_DIR)],
         cwd=ART_DIR,
         capture_output=True,
         text=True,
