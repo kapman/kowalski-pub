@@ -17,6 +17,13 @@ const outArg = process.argv.indexOf("--out");
 const outDir = outArg !== -1 ? resolve(process.argv[outArg + 1]) : resolve(__dirname, "..", "images");
 mkdirSync(outDir, { recursive: true });
 
+const sceneArg = process.argv.indexOf("--scene");
+const scene = sceneArg !== -1 ? process.argv[sceneArg + 1] : undefined;
+if (!scene) {
+  console.error("Usage: node src/capture.mjs --scene <name> [--out dir]");
+  process.exit(1);
+}
+
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
 const outPath = resolve(outDir, `${timestamp}.png`);
 
@@ -39,7 +46,10 @@ await page.setViewport({ width: WIDTH, height: HEIGHT });
 page.on("console", (msg) => console.error("[PAGE]", msg.text()));
 page.on("pageerror", (err) => console.error("[PAGE_ERROR]", err.message));
 
-await page.goto(`file://${DIST}`, { waitUntil: "domcontentloaded", timeout: 60_000 });
+await page.goto(`file://${DIST}?scene=${encodeURIComponent(scene)}`, {
+  waitUntil: "domcontentloaded",
+  timeout: 60_000,
+});
 await new Promise((r) => setTimeout(r, 500));
 
 const canvas = await page.$("canvas");
