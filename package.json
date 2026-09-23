@@ -1,0 +1,8 @@
+{
+  "name": "kowalski-pub",
+  "private": true,
+  "scripts": {
+    "preview": "node scripts/dev/preview.mjs",
+    "capture": "npm --prefix art run build && node art/capture.mjs"
+  }
+}
