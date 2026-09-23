@@ -8,6 +8,7 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 INSTALL_USER="$(id -un)"
 INSTALL_HOME="$HOME"
 SERVICE_TEMPLATE="$REPO_DIR/systemd/kowalski.service"
+NODE_VERSION="22.22.3"
 SERVICE_FILE="$(mktemp)"
 trap 'rm -f "$SERVICE_FILE"' EXIT
 
@@ -17,14 +18,14 @@ sudo raspi-config nonint do_i2c 0
 
 echo "==> Installing OS packages"
 sudo apt update
-sudo apt install -y python3-venv python3-dev curl chromium
+sudo apt install -y python3-venv python3-dev curl chromium rsync
 
-echo "==> Installing fnm and Node.js 22"
+echo "==> Installing fnm and Node.js $NODE_VERSION"
 curl -fsSL https://fnm.vercel.app/install 2>/dev/null | bash
 export PATH="$HOME/.local/share/fnm:$PATH"
 eval "$(fnm env --shell bash)"
-fnm install 22
-fnm default 22
+fnm install "$NODE_VERSION"
+fnm default "$NODE_VERSION"
 echo "Node.js $(node -v)"
 
 echo "==> Installing Node.js dependencies and building frontend"
