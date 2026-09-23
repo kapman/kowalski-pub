@@ -30,7 +30,7 @@ def render(inky, arg=None):
     seed = random.randint(0, 2**31 - 1)
     print(f"[generative] scene: {scene}, seed: {seed}", flush=True)
     result = subprocess.run(
-        [node, str(ART_DIR / "capture.mjs"), "--scene", scene, "--seed", str(seed), "--out", str(IMAGES_DIR)],
+        [node, str(ART_DIR / "capture.mjs"), scene, "--seed", str(seed), "--out", str(IMAGES_DIR)],
         cwd=ART_DIR,
         capture_output=True,
         text=True,

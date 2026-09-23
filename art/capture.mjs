@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { resolve, dirname } from "path";
+import { resolve, dirname, basename as pathBasename } from "path";
 import { fileURLToPath } from "url";
 import { existsSync, mkdirSync } from "fs";
 
@@ -17,12 +17,21 @@ const outArg = process.argv.indexOf("--out");
 const outDir = outArg !== -1 ? resolve(process.argv[outArg + 1]) : resolve(__dirname, "images");
 mkdirSync(outDir, { recursive: true });
 
-const sceneArg = process.argv.indexOf("--scene");
-const scene = sceneArg !== -1 ? process.argv[sceneArg + 1] : undefined;
-if (!scene) {
-  console.error("Usage: node capture.mjs --scene <name> [--seed <n>] [--out dir]");
+const positional = process.argv.slice(2).filter((a) => !a.startsWith("-"));
+const sceneInput = positional[0];
+if (!sceneInput) {
+  console.error("Usage: node capture.mjs <scene-path-or-name> [--seed <n>] [--out dir]");
   process.exit(1);
 }
+const SCENES_DIR = resolve(__dirname, "scenes");
+const sceneFile = /\.(ts|js)$/.test(sceneInput)
+  ? resolve(sceneInput)
+  : resolve(SCENES_DIR, `${sceneInput}.ts`);
+if (!sceneFile.startsWith(SCENES_DIR) || !existsSync(sceneFile)) {
+  console.error(`Scene not found: ${sceneInput} (expected a file under art/scenes/)`);
+  process.exit(1);
+}
+const scene = /\.(ts|js)$/.test(sceneInput) ? pathBasename(sceneInput).replace(/\.(ts|js)$/, "") : sceneInput;
 
 const seedArg = process.argv.indexOf("--seed");
 const seed = seedArg !== -1 ? process.argv[seedArg + 1] : undefined;
